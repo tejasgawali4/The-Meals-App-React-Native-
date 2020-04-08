@@ -5,8 +5,6 @@ class Category{
         this.title = title;
         this.color = color;
     }
-
-
 }
 
 export default Category;
