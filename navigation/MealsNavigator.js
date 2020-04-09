@@ -1,11 +1,13 @@
-import * as React from 'react';
+import React from 'react';
 import { Platform } from 'react-native';
-import {createStackNavigator} from '@react-navigation/stack';
+import {createStackNavigator } from '@react-navigation/stack';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 import MealsDetailScreen from '../screens/MealsDetailScreen';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import FavoritesScreen from '../screens/FavoritesScreen';
 import Color from '../constants/Colors';
-
+ 
 const Stack = createStackNavigator();
 
 function MealsNavigator() {
@@ -32,10 +34,22 @@ function MealsNavigator() {
         name="MealsDetails"
         component={MealsDetailScreen}
         options={{ title: 'Meals Details' }}
-        // initialParams={{ user: 'MealsDetails' }}
       />
     </Stack.Navigator>
   );
 }
 
 export default MealsNavigator;
+
+// const Tab = createBottomTabNavigator();
+
+// function MyTabNavigator() {
+//   return (
+//     <Tab.Navigator>
+//       <Tab.Screen name="Home" component={CategoriesScreen} />
+//       <Tab.Screen name="Favorites" component={FavoritesScreen} />
+//     </Tab.Navigator>
+//   );
+// }
+
+// export default MyTabNavigator;
