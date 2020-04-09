@@ -8,7 +8,7 @@ const CategoryMealScreen = props => {
     //Getting Params From The Route
     const  catId = props.route.params?.categoryId;
     const selectedCategory  = CATEGORIES.find(cat => cat.id === catId);
-
+ 
     //Setting Navigation Title
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
@@ -18,14 +18,16 @@ const CategoryMealScreen = props => {
 
     const displayedMeals = MEALS.filter(meal => meal.categoryIds.indexOf(catId) >= 0 );
 
-    const renderMealItem = itemData => {
+    const renderMealItem = (itemData) => {
         return (<MealItem 
             title={itemData.item.title} 
             duration = {itemData.item.duration}
             complexity = {itemData.item.complexity}
             affordability = {itemData.item.affordability}
             image = {itemData.item.imgUrl}
-            onSelectMeal={() =>{}}/>);
+            onSelectMeal={() =>{
+                props.navigation.navigate('MealsDetails',{mealId: itemData.item.id})
+            }}/>);
     };
 
     return (

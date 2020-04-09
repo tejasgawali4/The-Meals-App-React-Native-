@@ -1,34 +1,34 @@
-import React , {useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import {NavigationContainer} from '@react-navigation/native';
 import MealsNavigator from  './navigation/MealsNavigator';
 
-const fetchFonts = () => {
-  Font.loadAsync({
-    'open-sans' : require('./assets/fonts/OpenSans-Regular.ttf'),
-    'open-sans-bold' : require('./assets/fonts/OpenSans-Bold.ttf')
-  });
-};
+function useFonts(fontMap) {
+  let [fontsLoaded, setFontsLoaded] = useState(false);
+  (async () => {
+    await Font.loadAsync(fontMap);
+    setFontsLoaded(true);
+  })();
+  return [fontsLoaded];
+}
 
 export default function App() {
 
-  const [fontLoaded, setFontLoaded] = useState(false);
+  let [fontsLoaded] = useFonts({
+    'open-sans' : require('./assets/fonts/OpenSans-Regular.ttf'),
+    'open-sans-bold' : require('./assets/fonts/OpenSans-Bold.ttf')
+  });
 
-  if(!fontLoaded){
-      return <AppLoading startAsync={fetchFonts} 
-      onFinish={
-        () => {setFontLoaded(true)
-      }}/>;
+  if(!fontsLoaded){
+      return <AppLoading/>;
+  }else{
+    return (
+      <NavigationContainer>
+          <MealsNavigator/>
+      </NavigationContainer>);
   }
-
-  return (
-    <NavigationContainer>
-        <MealsNavigator/>
-    </NavigationContainer>
-  );
-
 }
 
 const styles = StyleSheet.create({
