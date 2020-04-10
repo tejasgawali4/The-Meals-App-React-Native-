@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import {NavigationContainer} from '@react-navigation/native';
-import MealsNavigator from  './navigation/MealsNavigator';
+import MyTabNavigator from  './navigation/MealsNavigator';
 
 function useFonts(fontMap) {
   let [fontsLoaded, setFontsLoaded] = useState(false);
@@ -26,7 +26,7 @@ export default function App() {
   }else{
     return (
       <NavigationContainer>
-          <MealsNavigator/>
+          <MyTabNavigator/>
       </NavigationContainer>);
   }
 }
