@@ -4,6 +4,7 @@ import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
 import {NavigationContainer} from '@react-navigation/native';
 import MyTabNavigator from  './navigation/MealsNavigator';
+import { Provider as PaperProvider } from 'react-native-paper';
 
 function useFonts(fontMap) {
   let [fontsLoaded, setFontsLoaded] = useState(false);
@@ -25,11 +26,13 @@ export default function App() {
       return <AppLoading/>;
   }else{
     return (
-      <NavigationContainer>
+      <PaperProvider>
+        <NavigationContainer>
           <MyTabNavigator/>
-      </NavigationContainer>);
+        </NavigationContainer>
+      </PaperProvider>);
   }
-}
+};
 
 const styles = StyleSheet.create({
   container: {
