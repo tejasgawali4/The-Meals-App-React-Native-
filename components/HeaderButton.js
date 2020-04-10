@@ -13,11 +13,11 @@ const HeaderButton = props => {
         />);
 };
 
-export default HeaderButton;
-
-styles = StyleSheet.create({
+const styles = StyleSheet.create({
     icon: {
         flex : 1,
         padding: 10,
     }
 });
+
+export default HeaderButton;

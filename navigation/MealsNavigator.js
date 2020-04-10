@@ -7,7 +7,8 @@ import MealsDetailScreen from '../screens/MealsDetailScreen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FavoritesScreen from '../screens/FavoritesScreen';
 import Color from '../constants/Colors';
- 
+import { Ionicons } from '@expo/vector-icons';
+
 const Stack = createStackNavigator();
 
 function MealsNavigator() {
@@ -35,21 +36,74 @@ function MealsNavigator() {
         component={MealsDetailScreen}
         options={{ title: 'Meals Details' }}
       />
+      <Stack.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{ title: 'Favorites' }}
+      />
     </Stack.Navigator>
   );
 }
 
-export default MealsNavigator;
+const Stack1 = createStackNavigator();
 
-// const Tab = createBottomTabNavigator();
+function FavStackNav(){
+  return (
+    <Stack1.Navigator
+        screenOptions={{ 
+        gestureEnabled: false,
+        headerTintColor: Platform.OS === 'android' ? Color.White : Color.PrimaryColor,
+        headerStyle: { backgroundColor: Platform.OS === 'android' ? Color.PrimaryColor : '' } }}
+    >
+        <Stack.Screen
+        name="Favorites"
+        component={FavoritesScreen}
+        options={{ title: 'Your Favorites' }}
+        />
+    </Stack1.Navigator>
+  );
+}
 
-// function MyTabNavigator() {
-//   return (
-//     <Tab.Navigator>
-//       <Tab.Screen name="Home" component={CategoriesScreen} />
-//       <Tab.Screen name="Favorites" component={FavoritesScreen} />
-//     </Tab.Navigator>
-//   );
-// }
 
-// export default MyTabNavigator;
+// export default MealsNavigator;
+
+const Tab = createBottomTabNavigator();
+
+function MyTabNavigator() {
+  return (
+    <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            let iconName;
+
+            if (route.name === 'Home') {
+              iconName = focused
+                ? 'ios-restaurant'
+                : 'ios-restaurant';
+            } else if (route.name === 'Favorites') {
+              iconName = focused ? 'ios-star' : 'ios-star-outline';
+            }
+
+            // You can return any component that you like here!
+            return <Ionicons name={iconName} size={size} color={color} />;
+          },
+        })}
+        tabBarOptions={{
+          activeTintColor: 'tomato',
+          inactiveTintColor: 'gray',
+        }}
+    >
+
+      <Tab.Screen 
+          name="Home" 
+          component={MealsNavigator}
+      />
+      <Tab.Screen 
+          name="Favorites" 
+          component={FavStackNav}
+      />
+    </Tab.Navigator>
+  );
+}
+
+export default MyTabNavigator;
