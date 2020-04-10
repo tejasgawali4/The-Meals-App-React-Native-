@@ -1,9 +1,26 @@
 import React from  'react';
-import { StyleSheet , FlatList } from 'react-native';
+import { StyleSheet , FlatList, View } from 'react-native';
 import { CATEGORIES } from '../data/dummy-data';
 import CategoryGridTiles from '../components/CategoryGridTiles';
+import HeaderButton from '../components/HeaderButton';
 
 const CategoriesScreen = props => {
+
+
+    //Setting Navigation Title
+    React.useLayoutEffect(() => {
+        props.navigation.setOptions({
+            headerTitle: 'Categories',
+            headerLeft: () => (
+                <HeaderButton 
+                    onPress={() => {
+                            props.navigation.openDrawer();
+                        }} 
+                    iconName='ios-menu'
+                    size={25}/>
+              )
+        });
+    }, [props.navigation, 'Categories']);
 
     const renderGridItem = (itemData) => {
         return (
@@ -17,10 +34,12 @@ const CategoriesScreen = props => {
     };
 
     return (
-        <FlatList  
-        data={CATEGORIES} 
-        renderItem={renderGridItem} 
-        numColumns={2}/>
+        <View style={styles.list}>
+            <FlatList  
+                data={CATEGORIES} 
+                renderItem={renderGridItem} 
+                numColumns={2}/>
+        </View>
     );
 };
 
@@ -29,6 +48,9 @@ const styles = StyleSheet.create({
         flex : 1 ,
         justifyContent : 'center',
         alignItems : 'center'
+    },
+    list : {
+        paddingTop : 0
     }
 });
 

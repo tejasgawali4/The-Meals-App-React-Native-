@@ -1,20 +1,45 @@
 import React from 'react';
-import { Platform } from 'react-native';
+import { Platform , View } from 'react-native';
 import {createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import CategoriesScreen from '../screens/CategoriesScreen';
 import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 import MealsDetailScreen from '../screens/MealsDetailScreen';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FavoritesScreen from '../screens/FavoritesScreen';
+import FilterScreens from '../screens/FiltersScreens';
 import Color from '../constants/Colors';
 import { Ionicons } from '@expo/vector-icons';
+import DrawerContent from '../components/DrawerContent';
+//Drawer Navigation
 
+const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
+
+function DrawerNavigator(){
+  return (
+    <Drawer.Navigator 
+        drawerContent={props => <DrawerContent {...props} />}
+        initialRouteName="Categories"
+        >
+        <Drawer.Screen 
+            name="Categories" 
+            component={MealsNavigator}
+             />
+        <Drawer.Screen 
+            name="Filters" 
+            component={FiltersStackNav} />
+    </Drawer.Navigator>
+  );
+};
+
+//Stack navigation
 
 function MealsNavigator() {
   return (
     <Stack.Navigator
-      initialRouteName="Home"
+      initialRouteName="Categories"
       screenOptions={{ 
           gestureEnabled: false,
           headerTintColor: Platform.OS === 'android' ? Color.White : Color.PrimaryColor,
@@ -23,7 +48,6 @@ function MealsNavigator() {
       <Stack.Screen
         name="Categories"
         component={CategoriesScreen}
-        options={{ title: 'Categories' }}
       />
       <Stack.Screen
         name="CategoryMeals"
@@ -45,29 +69,45 @@ function MealsNavigator() {
   );
 }
 
-const Stack1 = createStackNavigator();
-
 function FavStackNav(){
   return (
-    <Stack1.Navigator
+    <Stack.Navigator
         screenOptions={{ 
         gestureEnabled: false,
         headerTintColor: Platform.OS === 'android' ? Color.White : Color.PrimaryColor,
         headerStyle: { backgroundColor: Platform.OS === 'android' ? Color.PrimaryColor : '' } }}
     >
         <Stack.Screen
-        name="Favorites"
-        component={FavoritesScreen}
-        options={{ title: 'Your Favorites' }}
-        />
-    </Stack1.Navigator>
+          name="Favorites"
+          component={FavoritesScreen}
+          options={{ title: 'Your Favorites' }}
+          />
+        
+    </Stack.Navigator>
   );
 }
 
 
+function FiltersStackNav(){
+  return (
+    <Stack.Navigator
+        screenOptions={{ 
+        gestureEnabled: false,
+        headerTintColor: Platform.OS === 'android' ? Color.White : Color.PrimaryColor,
+        headerStyle: { backgroundColor: Platform.OS === 'android' ? Color.PrimaryColor : '' } }}
+    >
+        <Stack.Screen
+        name="Filter"
+        component={FilterScreens}
+        options={{ title: 'Filter' }}
+        />
+        
+    </Stack.Navigator>
+  );
+}
 // export default MealsNavigator;
 
-const Tab = createBottomTabNavigator();
+// Tab Navigation
 
 function MyTabNavigator() {
   return (
@@ -96,7 +136,7 @@ function MyTabNavigator() {
 
       <Tab.Screen 
           name="Home" 
-          component={MealsNavigator}
+          component={DrawerNavigator}
       />
       <Tab.Screen 
           name="Favorites" 
