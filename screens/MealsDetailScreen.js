@@ -1,15 +1,23 @@
-import React from  'react';
-import { View , Text , ScrollView,Image, StyleSheet , Button, Platform} from 'react-native';
-import { MEALS } from '../data/dummy-data';
+import React,{useCallback} from  'react';
+import { View , Text , ScrollView,Image, StyleSheet } from 'react-native';
 import HeaderButton from '../components/HeaderButton';
 import DefaultText from '../components/DefaultText';
-
+import { useSelector,useDispatch } from 'react-redux';
+import { toggleFavorite } from '../store/actions/meals';
 
 const MealsDetailScreen = props => {
 
+    const availableMeals = useSelector(state => state.meals.meals);
+
     //Getting Params From The Route
     const  mealid = props.route.params?.mealId;
-    const SelectedMeal  = MEALS.find(meal => meal.id === mealid);
+    const SelectedMeal  = availableMeals.find(meal => meal.id === mealid);
+
+    const dispatch = useDispatch();
+
+    const toggleFavHandler = useCallback(() => {
+        dispatch(toggleFavorite(SelectedMeal.id));
+    },[dispatch, availableMeals]);
     
     const ListItem = props => {
         return (
@@ -24,9 +32,7 @@ const MealsDetailScreen = props => {
             headerTitle: SelectedMeal.title,
             headerRight: () => (
                 <HeaderButton 
-                    onPress={() => {
-                            console.log('Mark as Fav..')
-                        }} 
+                    onPress={() => {}} 
                     iconName='ios-star'
                     size={26}/>
               )

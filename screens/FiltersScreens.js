@@ -1,5 +1,5 @@
-import React,{useState, useEffect, useCallback} from  'react';
-import { View , Text , StyleSheet , Switch, Platform, Button } from 'react-native';
+import React,{useState, useLayoutEffect, useCallback} from  'react';
+import { View , Text , StyleSheet , Switch, Platform } from 'react-native';
 import HeaderButton from '../components/HeaderButton';
 import Colors from '../constants/Colors';
 
@@ -19,34 +19,44 @@ import Colors from '../constants/Colors';
 
 const FilterScreens = props => {
 
+    const { navigation } = props;
+
     const [isGlutenFree, setIsGlutenFree] = useState(false);
     const [isLactoseFree, setIsLactoseFree] = useState(false);
     const [isVegan, setIsVegan] = useState(false);
     const [isVegetarian, setIsVegetarian] = useState(false);
 
-    //Setting Navigation Title
-    React.useLayoutEffect(() => {
-        props.navigation.setOptions({
+    const saveFilters = useCallback(() => {
+        const appliedFilters = {
+            glutenFree  : isGlutenFree,
+            lactoseFree : isLactoseFree,
+            vegan : isVegan,
+            vegetarian : isVegetarian
+        };
+        console.log(appliedFilters);
+    },[isGlutenFree,isLactoseFree,isVegan,isVegetarian]);
+
+    useLayoutEffect(() => {
+        navigation.setParams({save : saveFilters});
+        navigation.setOptions({
             headerTitle: 'Filters',
             headerLeft: () => (
                 <HeaderButton 
                     onPress={() => {
-                            props.navigation.openDrawer();
+                            navigation.openDrawer();
                         }} 
                     iconName='ios-menu'
                     size={25}/>
                 ),
             headerRight : () => (
-                <HeaderButton 
-                    onPress={() => {
-                            props.navigation.openDrawer();
-                        }} 
+                <HeaderButton
+                    onPress={() => {}} 
                     iconName='ios-save'
                     style={{alignItems: 'center'}}
                     size={25}/>
                 ) 
         });
-    }, [props.navigation, 'Filters']);
+    }, [navigation, 'Filters']);
 
     return (
         <View style={styles.screen}>

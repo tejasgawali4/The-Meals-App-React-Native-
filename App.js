@@ -5,6 +5,9 @@ import { AppLoading } from 'expo';
 import {NavigationContainer} from '@react-navigation/native';
 import MyTabNavigator from  './navigation/MealsNavigator';
 import { Provider as PaperProvider } from 'react-native-paper';
+import { createStore , combineReducers} from 'redux';
+import mealReducer from './store/reducers/meals';
+import { Provider } from 'react-redux';
 
 function useFonts(fontMap) {
   let [fontsLoaded, setFontsLoaded] = useState(false);
@@ -17,6 +20,12 @@ function useFonts(fontMap) {
 
 export default function App() {
 
+  const rootReducer = combineReducers({
+    meals : mealReducer
+  });
+
+  const store = createStore(rootReducer);
+
   let [fontsLoaded] = useFonts({
     'open-sans' : require('./assets/fonts/OpenSans-Regular.ttf'),
     'open-sans-bold' : require('./assets/fonts/OpenSans-Bold.ttf')
@@ -26,11 +35,13 @@ export default function App() {
       return <AppLoading/>;
   }else{
     return (
-      <PaperProvider>
-        <NavigationContainer>
-          <MyTabNavigator/>
-        </NavigationContainer>
-      </PaperProvider>);
+      <Provider store={store}>
+        <PaperProvider>
+          <NavigationContainer>
+            <MyTabNavigator/>
+          </NavigationContainer>
+        </PaperProvider>
+      </Provider>);
   }
 };
 
