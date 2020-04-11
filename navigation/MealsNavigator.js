@@ -27,7 +27,7 @@ function DrawerNavigator(){
             name="Categories" 
             component={MealsNavigator}
              />
-        <Drawer.Screen 
+        <Drawer.Screen
             name="Filters" 
             component={FiltersStackNav} />
     </Drawer.Navigator>
@@ -42,8 +42,11 @@ function MealsNavigator() {
       initialRouteName="Categories"
       screenOptions={{ 
           gestureEnabled: false,
+          titleStyle : { fontFamily : 'open-sans-bold'},
           headerTintColor: Platform.OS === 'android' ? Color.White : Color.PrimaryColor,
-          headerStyle: { backgroundColor: Platform.OS === 'android' ? Color.PrimaryColor : '' } }}
+          headerStyle: { 
+            backgroundColor: Platform.OS === 'android' ? Color.PrimaryColor : '' } 
+          }}
     >
       <Stack.Screen
         name="Categories"
@@ -74,6 +77,7 @@ function FavStackNav(){
     <Stack.Navigator
         screenOptions={{ 
         gestureEnabled: false,
+        titleStyle : { fontFamily : 'open-sans-bold'},
         headerTintColor: Platform.OS === 'android' ? Color.White : Color.PrimaryColor,
         headerStyle: { backgroundColor: Platform.OS === 'android' ? Color.PrimaryColor : '' } }}
     >
@@ -91,8 +95,9 @@ function FavStackNav(){
 function FiltersStackNav(){
   return (
     <Stack.Navigator
-        screenOptions={{ 
+        screenOptions={{   
         gestureEnabled: false,
+        titleStyle : { fontFamily : 'open-sans-bold'},
         headerTintColor: Platform.OS === 'android' ? Color.White : Color.PrimaryColor,
         headerStyle: { backgroundColor: Platform.OS === 'android' ? Color.PrimaryColor : '' } }}
     >
@@ -129,9 +134,19 @@ function MyTabNavigator() {
           },
         })}
         tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
-        }}
+          activeTintColor: Platform.OS === 'android' ? Color.White : 'tomato',
+          inactiveTintColor: Platform.OS === 'android' ? Color.White : 'gray',
+          labelStyle: {
+            fontSize: 15,
+          },
+          titleStyle : { fontFamily : 'open-sans-bold'},
+          tabStyle: {
+            width: 100,    
+          },
+          style: {
+            backgroundColor: Platform.OS === 'android' ? Color.PrimaryColor : Color.White,
+          }}
+        }
     >
 
       <Tab.Screen 
