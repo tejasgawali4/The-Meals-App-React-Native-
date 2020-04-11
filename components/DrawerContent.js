@@ -39,7 +39,7 @@ export default function DrawerContent(props) {
                 <Avatar.Image
                 source={{
                     uri:
-                    'https://pbs.twimg.com/profile_images/952545910990495744/b59hSXUd_400x400.jpg',
+                    'https://avatars1.githubusercontent.com/u/19585156?s=460&u=aebd02e63c8111996f2ae1bc10743e16224d51dc&v=4',
                 }}
                 size={50}
         />
