@@ -1,11 +1,12 @@
 import React from  'react';
 import MealList from '../components/MealList';
-import HeaderButton from '../components/HeaderButton';
 import { useSelector } from 'react-redux';
 
 const FavoritesScreen = props => {
 
-    const favMeals = useSelector(state => state.favMeals);    
+    const favMeals = useSelector(state => state.meals.favMeals);    
+
+    console.log(favMeals);
 
     //Setting Navigation Title
     // React.useLayoutEffect(() => {

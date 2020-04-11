@@ -1,5 +1,5 @@
 import React,{useCallback} from  'react';
-import { View , Text , ScrollView,Image, StyleSheet } from 'react-native';
+import { View , Text , ScrollView,Image, StyleSheet , Platform } from 'react-native';
 import HeaderButton from '../components/HeaderButton';
 import DefaultText from '../components/DefaultText';
 import { useSelector,useDispatch } from 'react-redux';
@@ -7,37 +7,40 @@ import { toggleFavorite } from '../store/actions/meals';
 
 const MealsDetailScreen = props => {
 
-    const availableMeals = useSelector(state => state.meals.meals);
-
     //Getting Params From The Route
     const  mealid = props.route.params?.mealId;
+
+    const availableMeals = useSelector(state => state.meals.meals);
     const SelectedMeal  = availableMeals.find(meal => meal.id === mealid);
+    const currentMealIsFavorite = useSelector(state =>
+        state.meals.favMeals.some(meal => meal.id === mealid)
+    );
 
     const dispatch = useDispatch();
 
     const toggleFavHandler = useCallback(() => {
-        dispatch(toggleFavorite(SelectedMeal.id));
-    },[dispatch, availableMeals]);
-    
+        dispatch(toggleFavorite(mealid));
+    },[dispatch, SelectedMeal]);
+
     const ListItem = props => {
         return (
         <View style={styles.listItem}>
             <DefaultText value={props.children}/>
         </View>);
     };
-    
+     
     //Setting Navigation Title
     React.useLayoutEffect(() => {
         props.navigation.setOptions({
             headerTitle: SelectedMeal.title,
             headerRight: () => (
                 <HeaderButton 
-                    onPress={() => {}} 
-                    iconName='ios-star'
+                    onPress={() => {toggleFavHandler()}} 
+                    iconName= {currentMealIsFavorite ? 'ios-star' : 'ios-star-outline'}
                     size={26}/>
               )
         });
-    }, [props.navigation, SelectedMeal.title]);
+    }, [props.navigation, SelectedMeal.title , currentMealIsFavorite]);
 
     return (
         <ScrollView>

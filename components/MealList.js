@@ -5,6 +5,7 @@ import MealItem from  '../components/MealItem';
 const MealList = props => {
 
     const renderMealItem = (itemData) => {
+
         return (<MealItem 
             title={itemData.item.title} 
             duration = {itemData.item.duration}
@@ -13,7 +14,7 @@ const MealList = props => {
             image = {itemData.item.imgUrl}
             onSelectMeal={() =>{
                 props.navigation.navigate('MealsDetails',
-                {mealId: itemData.item.id})
+                { mealId: itemData.item.id })
             }}/>);
     };
 
